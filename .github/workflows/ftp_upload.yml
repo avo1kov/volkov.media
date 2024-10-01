@@ -13,11 +13,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Upload files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+    - name: FTP Deployer
+      uses: sand4rt/ftp-deployer@v1.8
       with:
-        server: ${{ secrets.FTP_SERVER }}
+        sftp: true
+        host: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
-        server-dir: /domains/volkov.media/public_html/
+        local_folder: ./
+        remote_folder: /domains/volkov.media/public_html/
