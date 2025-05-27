@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to JPG Converter</title>
+    <meta name="description" content="Simple and fast image converter to JPG format. Works directly in your browser without uploading to server.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JPG Converter</h1>
+            <p>Convert any image to JPG format directly in your browser</p>
+        </header>
+
+        <main>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <h2>Drop your image here</h2>
+                    <p>or <span class="browse-link">browse files</span></p>
+                    <small>Supported: PNG, GIF, BMP, WebP, TIFF</small>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <div class="image-preview">
+                    <button id="newFileBtn" class="new-file-btn" title="Convert another image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                    </button>
+                    <img id="originalImage" alt="Original image">
+                    <div class="image-info" id="originalInfo"></div>
+                </div>
+
+                <div class="convert-controls">
+                    <button id="convertBtn" class="convert-btn">Convert & Download JPG</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Conversion happens locally in your browser. Files are not sent to any server.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
