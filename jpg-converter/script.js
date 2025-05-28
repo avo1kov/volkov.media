@@ -88,6 +88,23 @@ function handleFile(file) {
         return;
     }
 
+    // Track file upload event
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'file_upload', {
+            'event_category': 'engagement',
+            'event_label': file.type,
+            'value': Math.round(file.size / 1024) // file size in KB
+        });
+    }
+    
+    // Track file upload event in Yandex.Metrika
+    if (typeof ym !== 'undefined') {
+        ym(102230986, 'reachGoal', 'file_upload', {
+            file_type: file.type,
+            file_size_kb: Math.round(file.size / 1024)
+        });
+    }
+
     currentFile = file;
     
     // Create URL for preview
@@ -113,6 +130,21 @@ function showImageInfo(file, infoElement) {
 function convertAndDownload() {
     if (!currentFile) return;
     
+    // Track conversion start
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'conversion_start', {
+            'event_category': 'engagement',
+            'event_label': currentFile.type
+        });
+    }
+    
+    // Track conversion start in Yandex.Metrika
+    if (typeof ym !== 'undefined') {
+        ym(102230986, 'reachGoal', 'conversion_start', {
+            file_type: currentFile.type
+        });
+    }
+    
     convertBtn.textContent = 'Converting...';
     convertBtn.disabled = true;
     
@@ -130,6 +162,23 @@ function convertAndDownload() {
         
         // Convert to JPG with fixed quality of 90%
         canvas.toBlob(function(blob) {
+            // Track successful conversion
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion_complete', {
+                    'event_category': 'engagement',
+                    'event_label': currentFile.type,
+                    'value': Math.round(blob.size / 1024) // output size in KB
+                });
+            }
+            
+            // Track successful conversion in Yandex.Metrika
+            if (typeof ym !== 'undefined') {
+                ym(102230986, 'reachGoal', 'conversion_complete', {
+                    file_type: currentFile.type,
+                    output_size_kb: Math.round(blob.size / 1024)
+                });
+            }
+            
             // Create filename based on original
             const originalName = currentFile.name;
             const nameWithoutExt = originalName.substring(0, originalName.lastIndexOf('.')) || originalName;
@@ -170,6 +219,18 @@ function convertAndDownload() {
 
 // Reset state function
 function resetState() {
+    // Track new file button click
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'new_file_click', {
+            'event_category': 'engagement'
+        });
+    }
+    
+    // Track new file button click in Yandex.Metrika
+    if (typeof ym !== 'undefined') {
+        ym(102230986, 'reachGoal', 'new_file_click');
+    }
+    
     currentFile = null;
     previewSection.style.display = 'none';
     uploadArea.style.display = 'block';
@@ -181,6 +242,13 @@ function resetState() {
 
 // Error handling
 window.addEventListener('error', function(e) {
+    // Filter anonymous "Script error" (usually from browser/Custom Tabs system scripts)
+    if (e.message === 'Script error.' && !e.filename && !e.lineno) {
+        console.warn('Ignoring anonymous script error (likely browser/system related)');
+        return;
+    }
+    
+    // Show alert only for real errors
     console.error('An error occurred:', e.error);
     alert('An error occurred while processing the image. Please try again.');
     resetState();
