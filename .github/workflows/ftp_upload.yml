@@ -13,6 +13,16 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
+    - name: FTP Deployer avo1kov.com
+      uses: sand4rt/ftp-deployer@v1.8
+      with:
+        sftp: false
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local_folder: ./
+        remote_folder: /domains/volkov.media/public_html/
+
     - name: FTP Deployer
       uses: sand4rt/ftp-deployer@v1.8
       with:
