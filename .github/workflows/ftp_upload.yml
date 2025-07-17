@@ -21,7 +21,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local_folder: ./
-        remote_folder: /domains/volkov.media/public_html/
+        remote_folder: /domains/avo1kov.com/public_html/
 
     - name: FTP Deployer
       uses: sand4rt/ftp-deployer@v1.8
